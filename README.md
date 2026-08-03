@@ -2,7 +2,7 @@
 
 Decomposes 16 absolute facial-expression profiles (2 personality groups × 8 moods) into a compact **base + delta** structure for driving a real-time MetaHuman AI agent. This is the data-generation stage; a later, separate stage consumes this output inside Unreal Engine.
 
-## Introduction
+## The idea, briefly
 
 Instead of storing 16 independent, unrelated poses, each group gets:
 - **One base** — a per-channel *minimum* across that group's 8 moods. Represents the personality's always-on resting expression: whatever a channel never drops below, regardless of mood, isn't really "part of" any one mood — it's just how that face sits normally.
@@ -14,7 +14,6 @@ At runtime: `final_face = base + delta[mood] × blend_weight`, where `blend_weig
 
 - Python 3
 - `pandas`, `numpy`, `matplotlib` (`pip install pandas numpy matplotlib`)
-- **No Unreal Engine, no `unreal` module** — this script is pure Python and runs completely independently of Task 2 (the Unreal-side baking stage).
 
 ## Data you need before running this
 
@@ -41,9 +40,7 @@ These need to sit in two folders, one per group:
     └── ... (one pair per Group B participant)
 ```
 
-An optional `outliers_log.csv` (columns: `Participant`, `Event_ID`, `Status`) can flag specific detected events to exclude — the script skips this gracefully if the file doesn't exist.
-
-## Configuration
+## Configuration — edit these before running
 
 Everything you need to change lives at the top of `decompose.py`, under `CONFIG`:
 
@@ -51,9 +48,8 @@ Everything you need to change lives at the top of `decompose.py`, under `CONFIG`
 |---|---|
 | `DATA_ROOT` | Path to the folder containing `data_groupa/` and `data_groupb/` |
 | `GROUP_TAGS` | The full participant ID list for each group |
-| `GROUP_LABEL` | Human-readable description of each personality group |
+| `GROUP_LABEL` | Human-readable description of each personality group* |
 | `OUTPUT_DIR` | Where all output (JSON files, manifest, validation report, charts) gets written |
-| `OUTLIER_LOG_FILE` | Path to the optional outlier-exclusion CSV |
 
 ## How to run it
 
