@@ -2,7 +2,7 @@
 
 Decomposes 16 absolute facial-expression profiles (2 personality groups × 8 moods) into a compact **base + delta** structure for driving a real-time MetaHuman AI agent. This is the data-generation stage; a later, separate stage consumes this output inside Unreal Engine.
 
-## The idea, briefly
+## Introduction
 
 Instead of storing 16 independent, unrelated poses, each group gets:
 - **One base** — a per-channel *minimum* across that group's 8 moods. Represents the personality's always-on resting expression: whatever a channel never drops below, regardless of mood, isn't really "part of" any one mood — it's just how that face sits normally.
