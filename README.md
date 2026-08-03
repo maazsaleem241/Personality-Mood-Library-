@@ -2,7 +2,7 @@
 
 Decomposes 16 absolute facial-expression profiles (2 personality groups × 8 moods) into a compact **base + delta** structure for driving a real-time MetaHuman AI agent. This is the data-generation stage; a later, separate stage consumes this output inside Unreal Engine.
 
-## The idea, briefly
+## Introduction
 
 Instead of storing 16 independent, unrelated poses, each group gets:
 - **One base** — a per-channel *minimum* across that group's 8 moods. Represents the personality's always-on resting expression: whatever a channel never drops below, regardless of mood, isn't really "part of" any one mood — it's just how that face sits normally.
@@ -50,7 +50,7 @@ Everything you need to change lives at the top of `decompose.py`, under `CONFIG`
 |---|---|
 | `DATA_ROOT` | Path to the folder containing `data_groupa/` and `data_groupb/` |
 | `GROUP_TAGS` | The full participant ID list for each group |
-| `GROUP_LABEL` | Human-readable description of each personality group — **Group B's is currently a placeholder, fill in the real one before publishing results** |
+| `GROUP_LABEL` | Human-readable description of each personality group |
 | `OUTPUT_DIR` | Where all output (JSON files, manifest, validation report, charts) gets written |
 | `OUTLIER_LOG_FILE` | Path to the optional outlier-exclusion CSV |
 
@@ -99,8 +99,3 @@ Four checks run automatically every time, each with an accompanying chart:
 4. **Per-mood comparison** — one small chart per mood, Group A's top 5 active channels vs Group B's for that same mood.
 
 If the reconstruction check ever fails, or the script halts on a negative delta, something is genuinely wrong upstream — both are treated as hard errors, not warnings.
-
-## Known caveats
-
-- `GROUP_LABEL["B"]` is a placeholder and needs a real value before this is considered final.
-- Validated end-to-end against a partial dataset (3 of the intended participants) during development — logic is confirmed correct, but the actual output numbers will shift once run against the full participant rosters.
